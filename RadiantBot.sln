@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32407.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Start", "Start\Start.csproj", "{030B5467-D6D0-471C-8B33-92950F62E9D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Start", "Start\Start.csproj", "{030B5467-D6D0-471C-8B33-92950F62E9D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastruktur", "Infrastruktur", "{45F942CF-7332-4D4C-B428-3D089AC261D0}"
 EndProject
@@ -19,17 +19,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{3FB9D6AF-9FCA-4967-8FE1-BB0A0FE6A920}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginManagement", "LoginManagement\LoginManagement.csproj", "{0B5F24DB-69CC-4DB3-B688-C10E636706E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginManagement", "LoginManagement\LoginManagement.csproj", "{0B5F24DB-69CC-4DB3-B688-C10E636706E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoginManagement.Contract", "LoginManagement.Contract\LoginManagement.Contract.csproj", "{04FBA544-7A96-44DE-BC69-E462A9E1F05D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoginManagement.Contract", "LoginManagement.Contract\LoginManagement.Contract.csproj", "{04FBA544-7A96-44DE-BC69-E462A9E1F05D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bindings", "Bindings\Bindings.csproj", "{038AFFEC-C760-41BA-AD06-0E214D3EB778}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bindings", "Bindings\Bindings.csproj", "{038AFFEC-C760-41BA-AD06-0E214D3EB778}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{17312B18-4E26-4B4B-BF3B-BCFEE34A6BA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logging", "Logging\Logging.csproj", "{17312B18-4E26-4B4B-BF3B-BCFEE34A6BA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientManagement", "ClientManagement\ClientManagement.csproj", "{9623FD99-5557-486F-84C3-3B2A72CEA0FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientManagement", "ClientManagement\ClientManagement.csproj", "{9623FD99-5557-486F-84C3-3B2A72CEA0FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientManagement.Contract", "ClientManagement.Contract\ClientManagement.Contract.csproj", "{97BB9ED1-4C40-4B5B-B3D3-5C8592CC6AFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientManagement.Contract", "ClientManagement.Contract\ClientManagement.Contract.csproj", "{97BB9ED1-4C40-4B5B-B3D3-5C8592CC6AFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandManagement", "CommandManagement\CommandManagement.csproj", "{09C92E33-5590-4DF4-BD54-3E5AF011EA80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommandManagement.Contract", "CommandManagement.Contract\CommandManagement.Contract.csproj", "{486DF382-9807-40E4-ACC0-DEC1F1F7CCF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +69,14 @@ Global
 		{97BB9ED1-4C40-4B5B-B3D3-5C8592CC6AFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97BB9ED1-4C40-4B5B-B3D3-5C8592CC6AFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97BB9ED1-4C40-4B5B-B3D3-5C8592CC6AFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09C92E33-5590-4DF4-BD54-3E5AF011EA80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09C92E33-5590-4DF4-BD54-3E5AF011EA80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09C92E33-5590-4DF4-BD54-3E5AF011EA80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09C92E33-5590-4DF4-BD54-3E5AF011EA80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{486DF382-9807-40E4-ACC0-DEC1F1F7CCF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{486DF382-9807-40E4-ACC0-DEC1F1F7CCF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{486DF382-9807-40E4-ACC0-DEC1F1F7CCF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{486DF382-9807-40E4-ACC0-DEC1F1F7CCF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +92,8 @@ Global
 		{17312B18-4E26-4B4B-BF3B-BCFEE34A6BA3} = {FD2C131B-F6C1-4A36-B544-562B0FC3261D}
 		{9623FD99-5557-486F-84C3-3B2A72CEA0FD} = {99A835C2-451F-490C-B1D3-B6FD4D149D03}
 		{97BB9ED1-4C40-4B5B-B3D3-5C8592CC6AFB} = {99A835C2-451F-490C-B1D3-B6FD4D149D03}
+		{09C92E33-5590-4DF4-BD54-3E5AF011EA80} = {99A835C2-451F-490C-B1D3-B6FD4D149D03}
+		{486DF382-9807-40E4-ACC0-DEC1F1F7CCF3} = {99A835C2-451F-490C-B1D3-B6FD4D149D03}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B511CE1-326C-4319-AF8A-2C99F30820FF}

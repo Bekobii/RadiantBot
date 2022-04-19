@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ClientManagement.Contract\ClientManagement.Contract.csproj" />
     <ProjectReference Include="..\ClientManagement\ClientManagement.csproj" />
+    <ProjectReference Include="..\CommandManagement\CommandManagement.csproj" />
     <ProjectReference Include="..\Logging\Logging.csproj" />
     <ProjectReference Include="..\LoginManagement.Contract\LoginManagement.Contract.csproj" />
     <ProjectReference Include="..\LoginManagement\LoginManagement.csproj" />
