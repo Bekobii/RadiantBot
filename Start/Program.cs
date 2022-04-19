@@ -27,7 +27,6 @@ namespace RadiantBot.UI.Start
             await loginManager.Start(client);
 
 
-            Console.WriteLine("LMAO");
 
             await Task.Delay(-1);
         }
