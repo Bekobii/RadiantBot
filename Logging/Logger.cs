@@ -1,11 +1,12 @@
 ﻿using Discord;
+using System;
 
 namespace RadiantBot.CrossCutting.Logging
 {
-    public class Logger
+    public class Logger : ILogger
     {
 
-        private Task Log(LogMessage msg)
+        public Task Log(LogMessage msg)
         {
             Console.WriteLine($"[LOG:] {msg.ToString()}");
             return Task.CompletedTask;

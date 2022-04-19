@@ -1,15 +1,16 @@
 ﻿using Discord.WebSocket;
 using Ninject;
-
-
+using RadiantBot.CrossCutting.Logging;
 using RadiantBot.Infrastruktur.Bindings;
+using RadiantBot.Logik.Domain.ClientManagement.Contract;
 using RadiantBot.Logik.Domain.LoginManagement.Contract;
 
 namespace RadiantBot.UI.Start
 {
     public class Program
     {
-        ILoginManager manager;
+        ILoginManager loginManager;
+        IClientManager clientManager;
 
         private readonly string token = "NzYzODI4Mzk1MTMzMzcwNDU4.X39YoA.OOBe0lpiZrB8LGXsyrIm0WBNHoM";
 
@@ -18,12 +19,14 @@ namespace RadiantBot.UI.Start
         public async Task MainAsync()
         {
             var kernel = new Mapper().Initialize();
-            manager = kernel.Get<ILoginManager>();
+            loginManager = kernel.Get<ILoginManager>();
+            clientManager = kernel.Get<IClientManager>();
 
-            var client = new DiscordSocketClient();
+            var client = clientManager.Get();
+            await loginManager.Login(client, token);
+            await loginManager.Start(client);
+
             
-            await manager.Login(client, token);
-            await client.StartAsync();
 
 
             await Task.Delay(-1);

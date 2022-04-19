@@ -7,5 +7,7 @@ namespace RadiantBot.Logik.Domain.LoginManagement.Contract
 
         public Task Login(DiscordSocketClient client, string token);
 
+        public Task Start(DiscordSocketClient client);
+
     }
 }

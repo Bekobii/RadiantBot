@@ -1,4 +1,7 @@
 ﻿using Ninject;
+using RadiantBot.CrossCutting.Logging;
+using RadiantBot.Logik.Domain.ClientManagement;
+using RadiantBot.Logik.Domain.ClientManagement.Contract;
 using RadiantBot.Logik.Domain.LoginManagement;
 using RadiantBot.Logik.Domain.LoginManagement.Contract;
 
@@ -12,6 +15,10 @@ namespace RadiantBot.Infrastruktur.Bindings
             var kernel = new StandardKernel();
 
             kernel.Bind<ILoginManager>().To<LoginManager>();
+            kernel.Bind<ILogger>().To<Logger>();
+            kernel.Bind<IClientManager>().To<ClientManager>();
+            kernel.Bind<IClientFactory>().To<ClientFactory>();
+
 
 
             return kernel;
