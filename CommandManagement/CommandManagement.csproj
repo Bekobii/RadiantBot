@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Attributes\Attributes.csproj" />
     <ProjectReference Include="..\CommandManagement.Contract\CommandManagement.Contract.csproj" />
     <ProjectReference Include="..\Logging\Logging.csproj" />
   </ItemGroup>

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RadiantBot.CrossCutting.Logging
+namespace RadiantBot.CrossCutting.Logging.Contract
 {
     public interface ILogger
     {

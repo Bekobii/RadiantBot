@@ -4,16 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>RadiantBot.CrossCutting.Logging</RootNamespace>
+    <RootNamespace>RadiantBot.CrossCutting.Logging.Contract</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="3.5.0" />
-    <PackageReference Include="Ninject" Version="3.3.4" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Logging.Contract\Logging.Contract.csproj" />
   </ItemGroup>
 
 </Project>

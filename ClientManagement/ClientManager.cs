@@ -1,5 +1,5 @@
 ﻿using Discord.WebSocket;
-using RadiantBot.CrossCutting.Logging;
+using RadiantBot.CrossCutting.Logging.Contract;
 using RadiantBot.Logik.Domain.ClientManagement.Contract;
 
 namespace RadiantBot.Logik.Domain.ClientManagement
@@ -20,7 +20,6 @@ namespace RadiantBot.Logik.Domain.ClientManagement
             var client = factory.Create();
             return client;
         }
-
 
 
     }

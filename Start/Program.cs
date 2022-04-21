@@ -15,6 +15,7 @@ namespace RadiantBot.UI.Start
         ILoginManager? loginManager;
         IClientManager? clientManager;
         ICommandHandler? commandHandler;
+        IServiceProvider serviceProvider;
 
         private readonly string token = "NzYzODI4Mzk1MTMzMzcwNDU4.X39YoA.OOBe0lpiZrB8LGXsyrIm0WBNHoM";
 
@@ -24,6 +25,8 @@ namespace RadiantBot.UI.Start
         {
 
             var kernel = new Mapper().Initialize();
+            
+
             loginManager = kernel.Get<ILoginManager>();
             clientManager = kernel.Get<IClientManager>();
             commandHandler = kernel.Get<ICommandHandler>();
@@ -35,6 +38,7 @@ namespace RadiantBot.UI.Start
             await Task.Delay(-1);
         }
 
+    
         
 
       

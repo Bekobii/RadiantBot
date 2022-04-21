@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using RadiantBot.CrossCutting.Logging;
 using RadiantBot.Logik.Domain.ClientManagement.Contract;
+using RadiantBot.CrossCutting.Logging.Contract;
 
 namespace RadiantBot.Logik.Domain.ClientManagement
 {

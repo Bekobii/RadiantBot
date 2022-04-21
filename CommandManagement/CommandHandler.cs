@@ -1,7 +1,7 @@
 ﻿using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using RadiantBot.CrossCutting.Logging;
+using RadiantBot.CrossCutting.Logging.Contract;
 using RadiantBot.Logik.Domain.CommandManagement.Contract;
 using RadiantBot.Logik.Domain.CommandManagement.Modules;
 using System.Reflection;

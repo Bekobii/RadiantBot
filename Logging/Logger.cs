@@ -1,4 +1,5 @@
 ﻿using Discord;
+using RadiantBot.CrossCutting.Logging.Contract;
 using System;
 
 namespace RadiantBot.CrossCutting.Logging
