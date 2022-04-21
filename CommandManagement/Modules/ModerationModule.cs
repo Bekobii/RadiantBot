@@ -53,7 +53,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
                     .WithCurrentTimestamp()
                     .Build();
 
-                await logger.LogToChannel(Context.Guild, (ulong)Channel.Entwickler, embed);
+                await logger.LogToChannel(Context.Guild, (ulong)Channel.Team, embed);
             }
 
         }
@@ -76,7 +76,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
                     .Build();
 
             await Context.Message.DeleteAsync();
-            await logger.LogToChannel(Context.Guild, (ulong)Channel.Entwickler, embed);
+            await logger.LogToChannel(Context.Guild, (ulong)Channel.Team, embed);
         }
 
 

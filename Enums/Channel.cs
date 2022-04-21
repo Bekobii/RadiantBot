@@ -8,7 +8,7 @@ namespace RadiantBot.Infrastruktur.Enums
 {
     public enum Channel : ulong
     {
-        Entwickler = 965996284953653318
+        Team = 960927200259997726
 
     }
 }

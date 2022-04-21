@@ -28,6 +28,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement
 
 
             await service.AddModuleAsync(typeof(ModerationModule), services);
+            await service.AddModuleAsync(typeof(AdministrationModule), services);
         }
 
         private async Task HandleCommandAsync(SocketMessage arg)
