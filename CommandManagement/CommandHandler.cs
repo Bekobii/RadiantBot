@@ -11,22 +11,23 @@ namespace RadiantBot.Logik.Domain.CommandManagement
     public class CommandHandler : ICommandHandler
     {
         private readonly CommandService service;
-        private readonly ILogger logger;
-        private DiscordSocketClient? client;
+        private readonly IServiceProvider services;
+        private DiscordSocketClient client;
 
-        public CommandHandler(CommandService service, ILogger logger)
+        public CommandHandler(CommandService service, IServiceProvider services, DiscordSocketClient client)
         {
             this.service = service;
-            this.logger = logger;
+            this.services = services;
+            this.client = client;
         }            
 
-        public async Task InstallCommandsAsync(DiscordSocketClient client)
-        {
-            this.client = client;
+        public async Task InstallCommandsAsync()
+        { 
+        
             client.MessageReceived += HandleCommandAsync;
 
 
-            await service.AddModuleAsync(typeof(ModerationModule), null);
+            await service.AddModuleAsync(typeof(ModerationModule), services);
         }
 
         private async Task HandleCommandAsync(SocketMessage arg)
@@ -58,7 +59,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement
             await service.ExecuteAsync(
                 context: context,
                 argPos: argPos,
-                services: null);
+                services: services);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
         }
 
 
-        [RequireRoleAttribute("High-Team")]
+        //[RequireRoleAttribute("High-Team")]
         [Command("clear")]
         [Summary("Deletes a specific amount of messages in the current channel")]
         public async Task InfoAsync([Summary("The amount of messages to be deleted")]int num)

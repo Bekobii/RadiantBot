@@ -10,26 +10,38 @@ using RadiantBot.Logik.Domain.LoginManagement;
 using RadiantBot.Logik.Domain.LoginManagement.Contract;
 using RadiantBot.CrossCutting.Logging.Contract;
 using RadiantBot.Logik.Domain.CommandManagement.Modules;
+using Microsoft.Extensions.DependencyInjection;
+using Discord.Commands;
+using Discord.WebSocket;
 
 namespace RadiantBot.Infrastruktur.Bindings
 {
     public class Mapper
     {
+        private readonly CommandService service;
+        private readonly DiscordSocketClient client;
 
-        public StandardKernel Initialize()
+        public Mapper(CommandService service = null, DiscordSocketClient client = null)
         {
-            var kernel = new StandardKernel();
- 
-
-            kernel.Bind<ILoginManager>().To<LoginManager>();
-            kernel.Bind<ILogger>().To<Logger>();
-            kernel.Bind<IClientManager>().To<ClientManager>();
-            kernel.Bind<IClientFactory>().To<ClientFactory>();
-            kernel.Bind<ICommandHandler>().To<CommandHandler>();
-            kernel.Bind<IChannelLogger>().To<ChannelLogger>();
+            this.service = service ?? new CommandService();
+            this.client = client ?? new DiscordSocketClient();
+        }
 
 
-            return kernel;
+        public IServiceProvider ConfigureServices()
+        {
+            return new ServiceCollection()
+                .AddScoped<ILogger, Logger>()
+                .AddScoped<IChannelLogger, ChannelLogger>()
+                .AddScoped<ICommandHandler, CommandHandler>()
+                .AddScoped<IClientFactory, ClientFactory>()
+                .AddScoped<IClientManager, ClientManager>()
+                .AddScoped<ILoginManager, LoginManager>()
+                .AddSingleton<ModerationModule>()
+                .AddSingleton(service)
+                .AddSingleton(client)
+                .BuildServiceProvider();
+
         }
 
 
