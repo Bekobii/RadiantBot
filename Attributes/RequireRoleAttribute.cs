@@ -1,4 +1,5 @@
-﻿using Discord.Commands;
+﻿using Discord;
+using Discord.Commands;
 using Discord.WebSocket;
 
 namespace Attributes
@@ -23,6 +24,7 @@ namespace Attributes
                 }
                 else
                 {
+                    user.SendMessageAsync("**Du hast nicht die benötigten Rechte**");
                     return Task.FromResult(PreconditionResult.FromError("Du hast nicht die benötigten Rechte."));
                 }
             }
