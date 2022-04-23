@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>RadiantBot.Infrastruktur.Attributes</RootNamespace>
+    <RootNamespace>RadiantBot.Logik.Domain.MessageManagement</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

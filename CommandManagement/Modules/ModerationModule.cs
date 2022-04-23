@@ -61,7 +61,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
         //[RequireUserPermission(GuildPermission.ModerateMembers)]
         [Command("mute")]
         [Summary("Mutes a member for a specific time")]
-        public async Task MuteUser(IGuildUser user, string reason, int minutes)
+        public async Task MuteUser(IGuildUser user, int minutes, [Remainder] string reason)
         {
             await user.SetTimeOutAsync(new TimeSpan(0, minutes, 0));
 

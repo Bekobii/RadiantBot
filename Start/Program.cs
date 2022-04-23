@@ -2,10 +2,12 @@
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using Ninject;
+using RadiantBot.CrossCutting.DataClasses;
 using RadiantBot.CrossCutting.Logging.Contract;
 using RadiantBot.Infrastruktur.Bindings;
 using RadiantBot.Logik.Domain.ClientManagement.Contract;
 using RadiantBot.Logik.Domain.CommandManagement.Contract;
+using RadiantBot.Logik.Domain.ConfigManagement.Contract;
 using RadiantBot.Logik.Domain.LoginManagement.Contract;
 
 namespace RadiantBot.UI.Start
@@ -17,8 +19,9 @@ namespace RadiantBot.UI.Start
         IServiceProvider serviceProvider;
         DiscordSocketClient client;
         ILogger logger;
+        IConfigManager configManager;
 
-        private readonly string token = "NzYzODI4Mzk1MTMzMzcwNDU4.X39YoA.OOBe0lpiZrB8LGXsyrIm0WBNHoM";
+        private string token;
 
         public static Task Main(string[] args) => new Program().MainAsync();
 
@@ -26,13 +29,18 @@ namespace RadiantBot.UI.Start
         {
 
             serviceProvider = new Mapper().ConfigureServices();
-            
+
 
             loginManager = serviceProvider.GetService<ILoginManager>();
             commandHandler = serviceProvider.GetService<ICommandHandler>();
             client = serviceProvider.GetService<DiscordSocketClient>();
             logger = serviceProvider.GetService<ILogger>();
-            
+            configManager = serviceProvider.GetService<IConfigManager>();
+
+            Config cfg = await configManager.GetConfig();
+
+            token = cfg.ClientConfig.token;
+
             await loginManager.Login(client, token);
             await loginManager.Start(client);
             await commandHandler.InstallCommandsAsync();
@@ -40,11 +48,11 @@ namespace RadiantBot.UI.Start
             await Task.Delay(-1);
         }
 
-    
-        
 
-      
-       
+
+
+
+
     }
 }
 

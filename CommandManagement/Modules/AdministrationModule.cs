@@ -40,6 +40,8 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
                 
             });
 
+            
+
             await newChannel.SyncPermissionsAsync();
             await currentChannel.DeleteAsync();
 
