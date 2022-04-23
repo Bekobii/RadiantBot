@@ -17,6 +17,8 @@ using RadiantBot.Logik.Domain.ConfigManagement;
 using RadiantBot.Logik.Domain.ConfigManagement.Contract;
 using RadiantBot.CrossCutting.DataClasses;
 using RadiantBot.CrossCutting.DataClasses.Configs;
+using RadiantBot.Logik.Domain.ChannelManagement;
+using RadiantBot.Logik.Domain.ChannelManagement.Contract;
 
 namespace RadiantBot.Infrastruktur.Bindings
 {
@@ -29,8 +31,13 @@ namespace RadiantBot.Infrastruktur.Bindings
 
         public Mapper(CommandService service = null, DiscordSocketClient client = null, RoleConfig roleConfig = null, ClientConfig clientConfig = null)
         {
+            DiscordSocketConfig config = new DiscordSocketConfig();
+            config.GatewayIntents = Discord.GatewayIntents.AllUnprivileged | Discord.GatewayIntents.GuildMembers;
+            config.AlwaysDownloadUsers = true;
+           
+
             this.service = service ?? new CommandService();
-            this.client = client ?? new DiscordSocketClient();
+            this.client = client ?? new DiscordSocketClient(config);
             this.roleConfig = roleConfig ?? new RoleConfig();
             this.clientConfig = clientConfig ?? new ClientConfig();
         }
@@ -46,6 +53,7 @@ namespace RadiantBot.Infrastruktur.Bindings
                 .AddScoped<IClientManager, ClientManager>()
                 .AddScoped<ILoginManager, LoginManager>()
                 .AddScoped<IConfigManager, ConfigManager>()
+                .AddScoped<IChannelManager, ChannelManager>()
                 .AddSingleton<ModerationModule>()
                 .AddSingleton(service)
                 .AddSingleton(client)

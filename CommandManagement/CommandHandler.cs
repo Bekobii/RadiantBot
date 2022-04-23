@@ -35,7 +35,6 @@ namespace RadiantBot.Logik.Domain.CommandManagement
         {
             var message = (SocketUserMessage)arg;
 
-
             if (message == null)
             {
                 return;
@@ -57,10 +56,14 @@ namespace RadiantBot.Logik.Domain.CommandManagement
 
             var context = new SocketCommandContext(client, message);
 
-            await service.ExecuteAsync(
+            var result = await service.ExecuteAsync(
                 context: context,
                 argPos: argPos,
                 services: services);
+
+            await message.DeleteAsync();
+
+            
         }
     }
 }

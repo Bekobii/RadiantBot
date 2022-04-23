@@ -20,7 +20,7 @@ namespace RadiantBot.Logik.Domain.ConfigManagement
             this.roleConfig = roleConfig;
         }
 
-        public async Task<Config> GetConfig()
+        public Config GetConfig()
         {
             cfg = new Config(clientConfig, roleConfig);
             var file = new FileInfo(path);

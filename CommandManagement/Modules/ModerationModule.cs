@@ -7,8 +7,10 @@ using Attributes;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using RadiantBot.CrossCutting.DataClasses;
 using RadiantBot.CrossCutting.Logging.Contract;
-using RadiantBot.Infrastruktur.Enums;
+using RadiantBot.Logik.Domain.ChannelManagement.Contract;
+using RadiantBot.Logik.Domain.ConfigManagement.Contract;
 
 namespace RadiantBot.Logik.Domain.CommandManagement.Modules
 {
@@ -17,11 +19,16 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
     {
 
         private readonly IChannelLogger logger;
+        private readonly IChannelManager channelManager;
+        private const string logChannelString = "team-chat";
 
-        public ModerationModule(IChannelLogger logger)
+        public ModerationModule(IChannelLogger logger, IChannelManager channelManager)
         {
             this.logger = logger;
+            this.channelManager = channelManager;
+
         }
+
 
         [RequireRoleAttribute("High-Team")]
         [Command("delete")]
@@ -39,8 +46,6 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
 
                 await Task.Delay(200);
 
-                await Context.Channel.DeleteMessageAsync(Context.Message);
-
                 var builder = new EmbedBuilder();
 
 
@@ -53,17 +58,20 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
                     .WithCurrentTimestamp()
                     .Build();
 
-                await logger.LogToChannel(Context.Guild, (ulong)Channel.Team, embed);
+                var logChannel = channelManager.GetByName(logChannelString, (IGuildUser)Context.User).Result;
+                await logger.LogToChannel(Context.Guild, (ulong)logChannel.Id, embed);
             }
 
         }
 
-        //[RequireUserPermission(GuildPermission.ModerateMembers)]
+        [RequireUserPermission(GuildPermission.ModerateMembers)]
         [Command("mute")]
         [Summary("Mutes a member for a specific time")]
         public async Task MuteUser(IGuildUser user, int minutes, [Remainder] string reason)
         {
-            await user.SetTimeOutAsync(new TimeSpan(0, minutes, 0));
+
+           
+            await user.SetTimeOutAsync(new TimeSpan(0, 1, 0));
 
             var embed = new EmbedBuilder()
                     .WithAuthor(Context.Message.Author)
@@ -75,13 +83,10 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
                     .WithCurrentTimestamp()
                     .Build();
 
-            await Context.Message.DeleteAsync();
-            await logger.LogToChannel(Context.Guild, (ulong)Channel.Team, embed);
+
+            var logChannel = channelManager.GetByName(logChannelString, (IGuildUser)Context.User).Result;
+            await logger.LogToChannel(Context.Guild, (ulong)logChannel.Id, embed);
         }
-
-
-
-
 
     }
 }

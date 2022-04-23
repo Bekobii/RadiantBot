@@ -3,7 +3,8 @@ using Discord;
 using Discord.Commands;
 using Discord.Rest;
 using RadiantBot.CrossCutting.Logging.Contract;
-using RadiantBot.Infrastruktur.Enums;
+using RadiantBot.Logik.Domain.ChannelManagement.Contract;
+using RadiantBot.Logik.Domain.ConfigManagement.Contract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,13 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
     public class AdministrationModule : ModuleBase<SocketCommandContext>
     {
         private readonly IChannelLogger logger;
+        private readonly IChannelManager channelManager;
+        private const string logChannelString = "team-chat";
 
-        public AdministrationModule(IChannelLogger logger)
+        public AdministrationModule(IChannelLogger logger, IConfigManager configManager, IChannelManager channelManager)
         {
             this.logger = logger;
+            this.channelManager = channelManager;
         }
 
         [RequireRole("High-Team")]
@@ -53,7 +57,8 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
                     .WithCurrentTimestamp()
                     .Build();
 
-            await logger.LogToChannel(Context.Guild, (ulong)Channel.Team, embed);
+            var logChannel = channelManager.GetByName(logChannelString, (IGuildUser)Context.User).Result;
+            await logger.LogToChannel(Context.Guild, (ulong)logChannel.Id, embed);
         }
 
        

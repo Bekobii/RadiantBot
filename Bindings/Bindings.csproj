@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ChannelManagement\ChannelManagement.csproj" />
     <ProjectReference Include="..\ClientManagement.Contract\ClientManagement.Contract.csproj" />
     <ProjectReference Include="..\ClientManagement\ClientManagement.csproj" />
     <ProjectReference Include="..\CommandManagement\CommandManagement.csproj" />

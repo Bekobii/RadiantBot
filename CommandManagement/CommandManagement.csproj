@@ -15,7 +15,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Attributes\Attributes.csproj" />
+    <ProjectReference Include="..\ChannelManagement.Contract\ChannelManagement.Contract.csproj" />
     <ProjectReference Include="..\CommandManagement.Contract\CommandManagement.Contract.csproj" />
+    <ProjectReference Include="..\ConfigManagement.Contract\ConfigManagement.Contract.csproj" />
     <ProjectReference Include="..\Enums\Enums.csproj" />
     <ProjectReference Include="..\Logging\Logging.csproj" />
   </ItemGroup>

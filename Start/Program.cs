@@ -31,18 +31,21 @@ namespace RadiantBot.UI.Start
             serviceProvider = new Mapper().ConfigureServices();
 
 
+            
+
             loginManager = serviceProvider.GetService<ILoginManager>();
             commandHandler = serviceProvider.GetService<ICommandHandler>();
             client = serviceProvider.GetService<DiscordSocketClient>();
             logger = serviceProvider.GetService<ILogger>();
             configManager = serviceProvider.GetService<IConfigManager>();
 
-            Config cfg = await configManager.GetConfig();
+            Config cfg = configManager.GetConfig();
 
             token = cfg.ClientConfig.token;
 
             await loginManager.Login(client, token);
             await loginManager.Start(client);
+
             await commandHandler.InstallCommandsAsync();
 
             await Task.Delay(-1);
