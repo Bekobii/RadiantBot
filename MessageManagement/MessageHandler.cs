@@ -21,6 +21,35 @@ namespace RadiantBot.Logik.Domain.MessageManagement
             this.channelLogger = channelLogger;
             this.channelManager = channelManager;
             client.MessageReceived += HandleMessage;
+            client.MessageDeleted += HandleDelete;
+        }
+
+        private Task HandleDelete(Cacheable<IMessage, ulong> message, Cacheable<IMessageChannel, ulong> channel)
+        {
+
+            if(message.HasValue)
+            {
+                
+
+                var embed = new EmbedBuilder()
+                    .WithAuthor(client.CurrentUser.Username, client.CurrentUser.GetAvatarUrl())
+                    .WithTitle("Es wurde eine Nachricht gelöscht")
+                    .WithColor(Color.Red)
+                    .AddField("Autor", $"{message.Value.Author.Mention}")
+                    .AddField("Message", $"{message.Value.Content}")
+                    .WithCurrentTimestamp()
+                    .Build();
+
+                var logChannel = channelManager.GetByName("gelöschte-nachrichten", (IGuildUser)message.Value.Author).Result;
+
+                var guild = ((IGuildChannel)message.Value.Channel).Guild;
+
+                channelLogger.LogToChannel(guild, logChannel.Id, embed);
+
+                return Task.CompletedTask;
+            }
+
+            return Task.CompletedTask;
         }
 
         public async Task HandleMessage(SocketMessage arg)
@@ -47,7 +76,7 @@ namespace RadiantBot.Logik.Domain.MessageManagement
         private Task LogMessageDeleted(string message, IGuildUser user)
         {
             var embed = new EmbedBuilder()
-                    .WithAuthor(client.CurrentUser)
+                    .WithAuthor(client.CurrentUser.Username, client.CurrentUser.GetAvatarUrl())
                     .WithTitle("Es wurde eine Nachricht automatisch gelöscht")
                     .WithColor(Color.Red)
                     .AddField("Autor", $"{user.Mention}")
@@ -55,7 +84,7 @@ namespace RadiantBot.Logik.Domain.MessageManagement
                     .WithCurrentTimestamp()
                     .Build();
 
-            var logChannel = channelManager.GetByName("team-chat", user).Result;
+            var logChannel = channelManager.GetByName("moderation", user).Result;
 
             channelLogger.LogToChannel(user.Guild, logChannel.Id, embed);
 

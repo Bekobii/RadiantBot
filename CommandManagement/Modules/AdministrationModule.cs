@@ -20,7 +20,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
     {
         private readonly IChannelLogger logger;
         private readonly IChannelManager channelManager;
-        private const string logChannelString = "team-chat";
+        private const string logChannelString = "administration";
 
         public AdministrationModule(IChannelLogger logger, IChannelManager channelManager)
         {

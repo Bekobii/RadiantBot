@@ -37,6 +37,7 @@ namespace RadiantBot.Infrastruktur.Bindings
             DiscordSocketConfig config = new DiscordSocketConfig();
             config.GatewayIntents = Discord.GatewayIntents.AllUnprivileged | Discord.GatewayIntents.GuildMembers;
             config.AlwaysDownloadUsers = true;
+            config.MessageCacheSize = 100;
            
 
             this.service = service ?? new CommandService();
