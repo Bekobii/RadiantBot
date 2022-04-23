@@ -22,7 +22,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
         private readonly IChannelManager channelManager;
         private const string logChannelString = "team-chat";
 
-        public AdministrationModule(IChannelLogger logger, IConfigManager configManager, IChannelManager channelManager)
+        public AdministrationModule(IChannelLogger logger, IChannelManager channelManager)
         {
             this.logger = logger;
             this.channelManager = channelManager;
@@ -61,7 +61,86 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
             await logger.LogToChannel(Context.Guild, (ulong)logChannel.Id, embed);
         }
 
-       
+        [Group("blackword")]
+        public class BlackWordsModule : ModuleBase<SocketCommandContext>
+        {
+            private readonly IChannelLogger logger;
+            private readonly IConfigManager configManager;
+            private readonly IChannelManager channelManager;
+
+            public BlackWordsModule(IChannelLogger logger, IConfigManager configManager, IChannelManager channelManager)
+            {
+                this.logger = logger;
+                this.configManager = configManager;
+                this.channelManager = channelManager;
+            }
+
+
+            [RequireRole("High-Team")]
+            [Command("add")]
+            public async Task Add(string word)
+            {
+                await Context.Message.DeleteAsync();
+
+                var cfg = configManager.GetConfig();
+
+                if (cfg.Blackwords.Contains(word))
+                {
+
+                    await Context.User.SendMessageAsync("**Das Wort ist bereits in der Blacklist**");
+                    return;
+                }
+
+                cfg.Blackwords.Add(word);
+                await configManager.SaveConfig();
+
+                var embed = new EmbedBuilder()
+                    .WithAuthor(Context.Message.Author)
+                    .WithTitle("Ein Wort wurde der Blacklist hinzugefügt")
+                    .WithColor(Color.Red)
+                    .AddField("Wort", $"**{word}**")
+                    .WithCurrentTimestamp()
+                    .Build();
+
+                var logChannel = channelManager.GetByName(logChannelString, (IGuildUser)Context.User).Result;
+                await logger.LogToChannel(Context.Guild, (ulong)logChannel.Id, embed);
+            }
+
+            [RequireRole("High-Team")]
+            [Command("remove")]
+            public async Task Remove(string word)
+            {
+
+                await Context.Message.DeleteAsync();
+
+                var cfg = configManager.GetConfig();
+
+                if(!cfg.Blackwords.Contains(word))
+                {
+
+                    await Context.User.SendMessageAsync("**Das Wort ist nicht in der Blacklist**");
+                    return;
+                }
+
+                cfg.Blackwords.Remove(word);
+                await configManager.SaveConfig();
+
+                var embed = new EmbedBuilder()
+                    .WithAuthor(Context.Message.Author)
+                    .WithTitle("Ein Wort wurde aus der Blacklist entfernt")
+                    .WithColor(Color.Red)
+                    .AddField("Wort", $"**{word}**")
+                    .WithCurrentTimestamp()
+                    .Build();
+
+                
+                var logChannel = channelManager.GetByName(logChannelString, (IGuildUser)Context.User).Result;
+                await logger.LogToChannel(Context.Guild, (ulong)logChannel.Id, embed);
+
+            }
+
+        }
+
 
     }
 }

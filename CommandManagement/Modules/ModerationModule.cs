@@ -58,6 +58,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
                     .WithCurrentTimestamp()
                     .Build();
 
+                await Context.Message.DeleteAsync();
                 var logChannel = channelManager.GetByName(logChannelString, (IGuildUser)Context.User).Result;
                 await logger.LogToChannel(Context.Guild, (ulong)logChannel.Id, embed);
             }
@@ -83,7 +84,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
                     .WithCurrentTimestamp()
                     .Build();
 
-
+            await Context.Message.DeleteAsync();
             var logChannel = channelManager.GetByName(logChannelString, (IGuildUser)Context.User).Result;
             await logger.LogToChannel(Context.Guild, (ulong)logChannel.Id, embed);
         }

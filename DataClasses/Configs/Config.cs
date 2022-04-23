@@ -8,7 +8,7 @@ namespace RadiantBot.CrossCutting.DataClasses
 
         public RoleConfig RoleConfig { get; set; }
 
-        public List<string> Blackwords { get; set; }
+        public List<string> Blackwords { get; set; } = new List<string>();
 
         public Config(ClientConfig clientConfig, RoleConfig roleConfig)
         {

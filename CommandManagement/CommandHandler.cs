@@ -5,6 +5,7 @@ using RadiantBot.CrossCutting.Logging.Contract;
 using RadiantBot.Logik.Domain.CommandManagement.Contract;
 using RadiantBot.Logik.Domain.CommandManagement.Modules;
 using System.Reflection;
+using static RadiantBot.Logik.Domain.CommandManagement.Modules.AdministrationModule;
 
 namespace RadiantBot.Logik.Domain.CommandManagement
 {
@@ -29,6 +30,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement
 
             await service.AddModuleAsync(typeof(ModerationModule), services);
             await service.AddModuleAsync(typeof(AdministrationModule), services);
+
         }
 
         private async Task HandleCommandAsync(SocketMessage arg)
@@ -61,7 +63,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement
                 argPos: argPos,
                 services: services);
 
-            await message.DeleteAsync();
+            //await message.DeleteAsync();
 
             
         }

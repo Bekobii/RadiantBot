@@ -12,4 +12,11 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ChannelManagement.Contract\ChannelManagement.Contract.csproj" />
+    <ProjectReference Include="..\ConfigManagement.Contract\ConfigManagement.Contract.csproj" />
+    <ProjectReference Include="..\Logging.Contract\Logging.Contract.csproj" />
+    <ProjectReference Include="..\MessageManagement.Contract\MessageManagement.Contract.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -19,6 +19,8 @@ using RadiantBot.CrossCutting.DataClasses;
 using RadiantBot.CrossCutting.DataClasses.Configs;
 using RadiantBot.Logik.Domain.ChannelManagement;
 using RadiantBot.Logik.Domain.ChannelManagement.Contract;
+using RadiantBot.Logik.Domain.MessageManagement;
+using RadiantBot.Logik.Domain.MessageManagement.Contract;
 
 namespace RadiantBot.Infrastruktur.Bindings
 {
@@ -28,6 +30,7 @@ namespace RadiantBot.Infrastruktur.Bindings
         private readonly DiscordSocketClient client;
         private readonly RoleConfig roleConfig;
         private readonly ClientConfig clientConfig;
+        private readonly MessageHandler messageHandler;
 
         public Mapper(CommandService service = null, DiscordSocketClient client = null, RoleConfig roleConfig = null, ClientConfig clientConfig = null)
         {
@@ -54,7 +57,7 @@ namespace RadiantBot.Infrastruktur.Bindings
                 .AddScoped<ILoginManager, LoginManager>()
                 .AddScoped<IConfigManager, ConfigManager>()
                 .AddScoped<IChannelManager, ChannelManager>()
-                .AddSingleton<ModerationModule>()
+                .AddScoped<IMessageHandler, MessageHandler>()
                 .AddSingleton(service)
                 .AddSingleton(client)
                 .AddSingleton(roleConfig)

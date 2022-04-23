@@ -27,6 +27,7 @@
     <ProjectReference Include="..\Logging\Logging.csproj" />
     <ProjectReference Include="..\LoginManagement.Contract\LoginManagement.Contract.csproj" />
     <ProjectReference Include="..\LoginManagement\LoginManagement.csproj" />
+    <ProjectReference Include="..\MessageManagement\MessageManagement.csproj" />
   </ItemGroup>
 
 </Project>

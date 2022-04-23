@@ -9,6 +9,7 @@ using RadiantBot.Logik.Domain.ClientManagement.Contract;
 using RadiantBot.Logik.Domain.CommandManagement.Contract;
 using RadiantBot.Logik.Domain.ConfigManagement.Contract;
 using RadiantBot.Logik.Domain.LoginManagement.Contract;
+using RadiantBot.Logik.Domain.MessageManagement.Contract;
 
 namespace RadiantBot.UI.Start
 {
@@ -20,6 +21,7 @@ namespace RadiantBot.UI.Start
         DiscordSocketClient client;
         ILogger logger;
         IConfigManager configManager;
+        IMessageHandler messageHandler;
 
         private string token;
 
@@ -38,6 +40,8 @@ namespace RadiantBot.UI.Start
             client = serviceProvider.GetService<DiscordSocketClient>();
             logger = serviceProvider.GetService<ILogger>();
             configManager = serviceProvider.GetService<IConfigManager>();
+            messageHandler = serviceProvider.GetService<IMessageHandler>();
+            
 
             Config cfg = configManager.GetConfig();
 
