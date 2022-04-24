@@ -5,6 +5,7 @@ using RadiantBot.Logik.Domain.ChannelManagement.Contract;
 using RadiantBot.Logik.Domain.ConfigManagement.Contract;
 using RadiantBot.Logik.Domain.MessageManagement.Contract;
 using RadiantBot.Logik.Domain.WarnManagement.Contract;
+using System.Text.RegularExpressions;
 
 namespace RadiantBot.Logik.Domain.MessageManagement
 {
@@ -15,6 +16,7 @@ namespace RadiantBot.Logik.Domain.MessageManagement
         private readonly IChannelLogger channelLogger;
         private readonly IChannelManager channelManager;
         private readonly IWarnManager warnManager;
+        private readonly Regex linkRegex;
 
         public MessageHandler(DiscordSocketClient client, IConfigManager configManager, IChannelLogger channelLogger, IChannelManager channelManager, IWarnManager warnManager)
         {
@@ -23,8 +25,11 @@ namespace RadiantBot.Logik.Domain.MessageManagement
             this.channelLogger = channelLogger;
             this.channelManager = channelManager;
             this.warnManager = warnManager;
+            this.linkRegex = new Regex(@"https:\/\/discord.*");
+
             client.MessageReceived += HandleMessage;
             client.MessageDeleted += HandleDelete;
+           
         }
 
         private Task HandleDelete(Cacheable<IMessage, ulong> message, Cacheable<IMessageChannel, ulong> channel)
@@ -62,17 +67,24 @@ namespace RadiantBot.Logik.Domain.MessageManagement
 
             var message = (SocketUserMessage)arg;
 
+            if (DoesMessageContainLink(message.Content))
+            {
+                await WarnPlayer((IGuildUser)message.Author, "Senden eines Discord-Links");
+                await message.DeleteAsync();
+            }
+
+
             var cfg = configManager.GetConfig();
 
             var blacklist = cfg.Blackwords;
 
             foreach (var word in blacklist)
             {
-                if (message.Content.Contains(word))
+                if (message.Content.Contains(word, StringComparison.OrdinalIgnoreCase))
                 {
                     await message.DeleteAsync();
                     await LogMessageDeleted(word, (IGuildUser)message.Author);
-                    await WarnPlayer((IGuildUser)message.Author);
+                    await WarnPlayer((IGuildUser)message.Author, "Aussprechen eines Blackwords");
                     return;
                 }
             }
@@ -98,11 +110,21 @@ namespace RadiantBot.Logik.Domain.MessageManagement
 
         }
 
-        private async Task WarnPlayer(IGuildUser user)
+        private async Task WarnPlayer(IGuildUser user, string reason)
         {
-            await warnManager.AddWarn(user.Id, "Blackword", await user.Guild.GetCurrentUserAsync());
+            await warnManager.AddWarn(user.Id, reason, await user.Guild.GetCurrentUserAsync());
 
 
+        }
+
+        private bool DoesMessageContainLink(string message)
+        {
+            if(linkRegex.Match(message).Success)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
