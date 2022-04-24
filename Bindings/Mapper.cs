@@ -21,6 +21,12 @@ using RadiantBot.Logik.Domain.ChannelManagement;
 using RadiantBot.Logik.Domain.ChannelManagement.Contract;
 using RadiantBot.Logik.Domain.MessageManagement;
 using RadiantBot.Logik.Domain.MessageManagement.Contract;
+using RadiantBot.Logik.Domain.UserFileManagement;
+using RadiantBot.Logik.Domain.UserFileManagement.Contract;
+using RadiantBot.Logik.Domain.UserManagement;
+using RadiantBot.Logik.Domain.UserManagement.Contract;
+using RadiantBot.Logik.Domain.WarnManagement;
+using RadiantBot.Logik.Domain.WarnManagement.Contract;
 
 namespace RadiantBot.Infrastruktur.Bindings
 {
@@ -59,6 +65,9 @@ namespace RadiantBot.Infrastruktur.Bindings
                 .AddScoped<IConfigManager, ConfigManager>()
                 .AddScoped<IChannelManager, ChannelManager>()
                 .AddScoped<IMessageHandler, MessageHandler>()
+                .AddScoped<IUserFileManager, UserFileManager>()
+                .AddScoped<IUserManager, UserManager>()
+                .AddScoped<IWarnManager, WarnManager>()
                 .AddSingleton(service)
                 .AddSingleton(client)
                 .AddSingleton(roleConfig)

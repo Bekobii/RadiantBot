@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>RadiantBot.Logik.Domain.UserManagement</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UserFileManagement.Contract\UserFileManagement.Contract.csproj" />
+    <ProjectReference Include="..\UserManagement.Contract\UserManagement.Contract.csproj" />
+  </ItemGroup>
+
+</Project>

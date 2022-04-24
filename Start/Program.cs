@@ -10,6 +10,7 @@ using RadiantBot.Logik.Domain.CommandManagement.Contract;
 using RadiantBot.Logik.Domain.ConfigManagement.Contract;
 using RadiantBot.Logik.Domain.LoginManagement.Contract;
 using RadiantBot.Logik.Domain.MessageManagement.Contract;
+using RadiantBot.Logik.Domain.UserFileManagement.Contract;
 
 namespace RadiantBot.UI.Start
 {
@@ -22,6 +23,7 @@ namespace RadiantBot.UI.Start
         ILogger logger;
         IConfigManager configManager;
         IMessageHandler messageHandler;
+        IUserFileManager userFileManager;
 
         private string token;
 
@@ -41,7 +43,9 @@ namespace RadiantBot.UI.Start
             logger = serviceProvider.GetService<ILogger>();
             configManager = serviceProvider.GetService<IConfigManager>();
             messageHandler = serviceProvider.GetService<IMessageHandler>();
-            
+            userFileManager = serviceProvider.GetService<IUserFileManager>();
+
+            var userList = userFileManager.Get();
 
             Config cfg = configManager.GetConfig();
 
@@ -49,6 +53,8 @@ namespace RadiantBot.UI.Start
 
             await loginManager.Login(client, token);
             await loginManager.Start(client);
+
+            
 
             await commandHandler.InstallCommandsAsync();
 

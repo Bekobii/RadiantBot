@@ -41,12 +41,10 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
                 prop.CategoryId = currentChannel.CategoryId;
                 prop.Position = currentChannel.Position;
                 prop.Name = currentChannel.Name;
+                prop.PermissionOverwrites = currentChannel.PermissionOverwrites.ToArray();
                 
             });
 
-            
-
-            await newChannel.SyncPermissionsAsync();
             await currentChannel.DeleteAsync();
 
             var embed = new EmbedBuilder()

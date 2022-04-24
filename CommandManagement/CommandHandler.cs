@@ -63,6 +63,8 @@ namespace RadiantBot.Logik.Domain.CommandManagement
                 argPos: argPos,
                 services: services);
 
+            
+
             //await message.DeleteAsync();
 
             

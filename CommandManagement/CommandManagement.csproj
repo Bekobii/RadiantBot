@@ -20,6 +20,7 @@
     <ProjectReference Include="..\ConfigManagement.Contract\ConfigManagement.Contract.csproj" />
     <ProjectReference Include="..\Enums\Enums.csproj" />
     <ProjectReference Include="..\Logging\Logging.csproj" />
+    <ProjectReference Include="..\WarnManagement.Contract\WarnManagement.Contract.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,6 +4,7 @@ using RadiantBot.CrossCutting.Logging.Contract;
 using RadiantBot.Logik.Domain.ChannelManagement.Contract;
 using RadiantBot.Logik.Domain.ConfigManagement.Contract;
 using RadiantBot.Logik.Domain.MessageManagement.Contract;
+using RadiantBot.Logik.Domain.WarnManagement.Contract;
 
 namespace RadiantBot.Logik.Domain.MessageManagement
 {
@@ -13,13 +14,15 @@ namespace RadiantBot.Logik.Domain.MessageManagement
         private readonly IConfigManager configManager;
         private readonly IChannelLogger channelLogger;
         private readonly IChannelManager channelManager;
+        private readonly IWarnManager warnManager;
 
-        public MessageHandler(DiscordSocketClient client, IConfigManager configManager, IChannelLogger channelLogger, IChannelManager channelManager)
+        public MessageHandler(DiscordSocketClient client, IConfigManager configManager, IChannelLogger channelLogger, IChannelManager channelManager, IWarnManager warnManager)
         {
             this.client = client;
             this.configManager = configManager;
             this.channelLogger = channelLogger;
             this.channelManager = channelManager;
+            this.warnManager = warnManager;
             client.MessageReceived += HandleMessage;
             client.MessageDeleted += HandleDelete;
         }
@@ -29,8 +32,6 @@ namespace RadiantBot.Logik.Domain.MessageManagement
 
             if(message.HasValue)
             {
-                
-
                 var embed = new EmbedBuilder()
                     .WithAuthor(client.CurrentUser.Username, client.CurrentUser.GetAvatarUrl())
                     .WithTitle("Es wurde eine Nachricht gelöscht")
@@ -54,6 +55,11 @@ namespace RadiantBot.Logik.Domain.MessageManagement
 
         public async Task HandleMessage(SocketMessage arg)
         {
+            if(arg is SocketSystemMessage)
+            {
+                return;
+            }
+
             var message = (SocketUserMessage)arg;
 
             var cfg = configManager.GetConfig();
@@ -66,10 +72,10 @@ namespace RadiantBot.Logik.Domain.MessageManagement
                 {
                     await message.DeleteAsync();
                     await LogMessageDeleted(word, (IGuildUser)message.Author);
+                    await WarnPlayer((IGuildUser)message.Author);
                     return;
                 }
             }
-
 
         }
 
@@ -89,6 +95,13 @@ namespace RadiantBot.Logik.Domain.MessageManagement
             channelLogger.LogToChannel(user.Guild, logChannel.Id, embed);
 
             return Task.CompletedTask;
+
+        }
+
+        private async Task WarnPlayer(IGuildUser user)
+        {
+            await warnManager.AddWarn(user.Id, "Blackword", await user.Guild.GetCurrentUserAsync());
+
 
         }
     }

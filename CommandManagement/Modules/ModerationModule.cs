@@ -11,12 +11,14 @@ using RadiantBot.CrossCutting.DataClasses;
 using RadiantBot.CrossCutting.Logging.Contract;
 using RadiantBot.Logik.Domain.ChannelManagement.Contract;
 using RadiantBot.Logik.Domain.ConfigManagement.Contract;
+using RadiantBot.Logik.Domain.WarnManagement.Contract;
 
 namespace RadiantBot.Logik.Domain.CommandManagement.Modules
 {
     [Group("mod")]
     public class ModerationModule : ModuleBase<SocketCommandContext>
     {
+
 
         private readonly IChannelLogger logger;
         private readonly IChannelManager channelManager;
@@ -35,7 +37,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
         [Summary("Deletes the last message in the channel")]
         public async Task DeleteMessageAsync()
         {
-            if(Context.Channel != null)
+            if (Context.Channel != null)
             {
                 IGuildChannel channel = Context.Channel as IGuildChannel;
 
@@ -71,7 +73,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
         public async Task MuteUser(IGuildUser user, int minutes, [Remainder] string reason)
         {
 
-           
+
             await user.SetTimeOutAsync(new TimeSpan(0, 1, 0));
 
             var embed = new EmbedBuilder()
@@ -87,6 +89,45 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
             await Context.Message.DeleteAsync();
             var logChannel = channelManager.GetByName(logChannelString, (IGuildUser)Context.User).Result;
             await logger.LogToChannel(Context.Guild, (ulong)logChannel.Id, embed);
+        }
+
+        [Group("warn")]
+        public class WarnModule : ModuleBase<SocketCommandContext>
+        {
+            private readonly IChannelLogger logger;
+            private readonly IChannelManager channelManager;
+            private readonly IWarnManager warnManager;
+            private const string logChannelString = "moderation";
+
+            public WarnModule(IChannelLogger logger, IChannelManager channelManager, IWarnManager warnManager)
+            {
+                this.logger = logger;
+                this.channelManager = channelManager;
+                this.warnManager = warnManager;
+            }
+
+            [RequireUserPermission(GuildPermission.ModerateMembers)]
+            [Command("add")]
+            public async Task AddWarn(IGuildUser user, [Remainder] string reason)
+            {
+                await warnManager.AddWarn(user.Id, reason, (IGuildUser)Context.User);
+
+                await Context.Message.DeleteAsync();
+            }
+
+            [RequireRole("High-Team")]
+            [Command("remove")]
+            public async Task RemoveWarn(IGuildUser user)
+            {
+                await warnManager.RemoveWarn(user.Id, (IGuildUser)Context.User);
+
+
+               
+                await Context.Message.DeleteAsync();
+            }
+
+            
+
         }
 
     }
