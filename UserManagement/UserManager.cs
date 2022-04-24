@@ -60,8 +60,8 @@ namespace RadiantBot.Logik.Domain.UserManagement
 
         public async Task Remove(User user)
         {
-            //userFile.users.Remove(user);
-            //await userFileManager.Save();
+            userFile.users.Remove(user);
+            await userFileManager.Save(userFile);
 
             throw new NotImplementedException();
         }
