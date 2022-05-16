@@ -5,6 +5,7 @@ using RadiantBot.Logik.Domain.ChannelManagement.Contract;
 using RadiantBot.Logik.Domain.ConfigManagement.Contract;
 using RadiantBot.Logik.Domain.MessageManagement.Contract;
 using RadiantBot.Logik.Domain.WarnManagement.Contract;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace RadiantBot.Logik.Domain.MessageManagement

